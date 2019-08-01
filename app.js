@@ -37,12 +37,12 @@ require('./config/views')(app);
 
 // route middleware
 require('./config/routes')(app);
-
-// configuration and connections
+//configuration
+mongodb.configure(appConfig.database);
+//connections
 async.waterfall([
     // connect to mongodb
     function (callback) {
-      mongodb.configure(appConfig.database);
       mongodb.connect2(function (err) {
         if (err) {
           console.log(err);

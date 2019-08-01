@@ -30,13 +30,27 @@ router.get('/register', function(req,res,next) {
 
 //register post
 router.post('/register', async function(req,res,next) {
+
     var userName = req.body.userName;
     var email = req.body.email;
     var password = req.body.password;
-    var params = {userName: userName, email:email, password:password};
+    var params = {
+        userName: userName, 
+        email:email, 
+        password:password, 
+        collectionName: "userRegisterSchema"
+    };
 
     var response = await MongoDB.findOne(params);
-    console.log(response)
+    if (response.data && !response.err) {
+        // kullanıcı oluştur
+    }
+    else if (!response.data) {
+        //data yok diye hata gönder
+    }
+    else {
+        //hata gönder
+    }
 
     //res.redirect('/');
 })
