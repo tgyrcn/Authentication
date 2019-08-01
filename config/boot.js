@@ -17,7 +17,7 @@ module.exports = function (next) {
       function (callback) {
         var findParams = {
           isAdmin: true, 
-          collectionName: 'userRegisterSchema'
+          collectionName: 'userSchema'
         }
         MongoDB.findOne(findParams, function (err, found) {
           callback(err, found);

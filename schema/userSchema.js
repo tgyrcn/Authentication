@@ -20,17 +20,7 @@ module.exports = {
             description: "Password of the customer",
             type: "string",
             minLength: 1
-        },
-        rememberMe: {
-            description: "Remember me flag",
-            type: 'boolean',
-            default: false
-        },
-        isAdmin : {
-            type : 'boolean',
-            default : false
-        },
-        rememberMe: { type: 'boolean', default: false }    
+        }   
     },
     required:["userName", "email", "password"]
 }

@@ -43,7 +43,7 @@ mongodb.configure(appConfig.database);
 async.waterfall([
     // connect to mongodb
     function (callback) {
-      mongodb.connect2(function (err) {
+      mongodb.connect(function (err) {
         if (err) {
           console.log(err);
         }

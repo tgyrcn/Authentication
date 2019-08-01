@@ -8,6 +8,7 @@
             "type": "node",
             "request": "launch",
             "name": "Launch Program",
+            "runtimeVersion": "10.16.0",
             "program": "${workspaceFolder}/app.js"
         }
     ]
