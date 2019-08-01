@@ -1,0 +1,26 @@
+
+mixin menu
+    .container
+        .card
+            .card-header
+                span#outputFirst.card-title HOT
+                span -
+                span#outputSecond.card-title USDT
+                .card-content
+                    input#parityResult(type='text', name='parityResult', placeholder='Satoshi')
+                    |  /
+                    input#parityResult1(type='text', name='parityResult1', placeholder='Buy Wall')
+                    br
+                    input#parityResult2(type='text', name='parityResult2', placeholder='Satoshi')
+                    |  /
+                    input#parityResult3(type='text', name='parityResult3', placeholder='Sell Wall')
+                    button#btn.btn.btn-success.ml-2 GetBtcValues
+                    br
+                    input#parityTL(type='text', name='parityTL', placeholder='TL-USDT PARITY')
+                    input#parityTL1(type='text', name='parityTL1', placeholder='HOT-TL')
+                    button#parityLira.btn.btn-success.mt-2.ml-4 GetTLValue
+                    button#result.btn.btn-danger.mt-2.ml-4 Price
+                    br
+                    input#outputResult(type='text', name='outputResult', placeholder='Result', readonly='')
+            .col.s4
+                label#lastUpdateData

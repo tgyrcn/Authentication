@@ -1,0 +1,124 @@
+{
+    // version of the app
+    "version": "0.0.1",
+    // tile of the app
+    "title": "auth",
+    // prefix for redis and cookies
+    "prefix": "auth",
+    // app behind a proxy
+    "trustProxy": true,
+    // only accepts over HTTPS.
+    "secure": false,
+    // CORS
+    "cors": {
+      "whiteList": [
+        "http://192.168.1.22:5000"
+      ]
+    },
+    // host of the app
+    "host": "http://localhost:5000",
+    // database configuration
+    "database": {
+      // mongodb://[username:password@]host1[:port1][,...hostN[:portN]]][/[database][?options]]
+      // https://docs.mongodb.com/manual/reference/connection-string/
+      "connectionUrl": "mongodb://localhost:27017/auth",
+      "options": {
+        // Maximum poolSize for each individual server or proxy connection.(default 5)
+        "poolSize": 10,
+        // The name of the application that created MongoClient instance. 
+        "appname": "auth"
+      }
+    },
+    // redis configuration
+    "redis": {
+      // https://github.com/NodeRedis/node_redis#options-object-properties
+      "host": "127.0.0.1",
+      "port": 6379
+    },
+    // i18n configuration
+    "i18n": {
+      "locales": ["tr", "es"]
+    },
+    // session configuration
+    // https://github.com/expressjs/session
+    "session": {
+      "cms": {
+        // https://github.com/tj/connect-redis
+        "redisStore": {
+          "prefix": "cms:session:"
+        },
+        "cookie": {
+          "httpOnly": true,
+          "maxAge": 86400000, // 1 day in miliseconds
+          "path": "/",
+          "secure": false
+        },
+        "secret": "e3cfbdba-4a5c-47d7-9b60-8f1ae5530d72",
+        "name": "cms.sid",
+        "rememberMe": {
+          "cookie": {
+            "httpOnly": true,
+            "maxAge": 604800000, // 1 week in miliseconds
+            "secure": false,
+            "signed": true
+          },
+          "name": "cms.rmt"
+        }
+      },
+      "site": {
+        // https://github.com/tj/connect-redis
+        "redisStore": {
+          "prefix": "site:session:"
+        },
+        "cookie": {
+          "httpOnly": true,
+          "maxAge": 86400000, // 1 day in miliseconds
+          "path": "/",
+          "secure": false
+        },
+        "secret": "de49e01c-2997-4cd6-a724-88018e19d0c8",
+        "name": "sid",
+        "rememberMe": {
+          "cookie": {
+            "httpOnly": true,
+            "maxAge": 604800000, // 1 week in miliseconds
+            "secure": false,
+            "signed": true
+          },
+          "name": "rmt"
+        }
+      },
+      "api": {
+        "jwt": {
+          "secretOrPrivateKey": "6fbdabb7-6438-4d47-9579-72baefb0fa34-d4725edd-133c-4c19-a0b2-a7279af38390",
+          "access_token": {
+            "expiresIn": 86400 // 1 day in seconds
+          },
+          "refresh_token": {
+            "expiresIn": 31536000 // 1 year in seconds
+          }
+        }
+      }
+    },
+    // default configurations
+    "defaults": {
+      "language": "tr",
+      "country": "TR",
+      "timezone":"Europe/Istanbul",
+      "formats": {
+        "datetime": "L LT",
+        "date": "L",
+        "time": "LT",
+        "phone": 1  // PhoneUtils.enums.formats
+      }
+    },
+    // fixed configurations
+    "fixed": {
+      // iso code of country
+      "country": "TR",
+      // iso code of the language
+      "language": "tr",
+      // moment-timezone name
+      "timezone": "Europe/Istanbul"
+    }
+  }
