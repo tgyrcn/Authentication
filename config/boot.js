@@ -2,50 +2,41 @@ var async = require('async');
 var MongoDB = require('../lib/mongodb');
 var BcryptUtils = require('../lib/bcryptUtils');
 
-module.exports = function (next) {
+module.exports = async () => {
 
     // set data
-    var user = {
-      userName : "Admin Admin",
+    const user = {
+      userName : "AuthenticationApp",
       email : "tugayarican@gmail.com",
-      password: "asd1234",
+      password: "auth!1234",
       isAdmin: true,
     };
-  
-    async.waterfall([
-      // check admin
-      function (callback) {
-        var findParams = {
-          isAdmin: true, 
-          collectionName: 'userSchema'
-        }
-        MongoDB.findOne(findParams, function (err, found) {
-          callback(err, found);
-        });
-      },
-      // create admin if not exists
-      function (exAdmin, callback) {
-        if (!exAdmin) {
-          BcryptUtils.hash(user.password, function (err, hashedPassword) {
-            user.password = hashedPassword
-            MongoDB.insertOne(user, function (err, created) {
-              callback(err, created);
-            });
-          });
-        }
-        else {
-          callback(null, exAdmin);
-        }
+
+    let findParams = {
+      isAdmin: true
+    }
+    let result = await MongoDB.findOne(findParams, "userSchema");
+    if (result && result.err) {
+      console.log(result.err);
+    }
+    let exAdmin = result.data;
+    if (!exAdmin) {
+      let response = await BcryptUtils.hash(user.password);
+      if (response && response.err) {
+        return err;
       }
-    ],
-      function (err) {
-        if(next) {
-          next(err);
-        }
-        else {
+      let hashedValue = response && response.data ? response.data : null;
+      if (hashedValue) {
+        user.password = hashedValue;
+        let result = await MongoDB.insertOne(user,"userSchema");
+        if (result && result.err) {
           return err;
         }
+        let createdUser = result.data;
+        if (createdUser) {
+          console.info("Admin Oluşturuldu");
+        }
       }
-    );
+    }
+}
   
-};

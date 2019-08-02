@@ -13,7 +13,7 @@ var mongodb = require(__basedir + '/lib/mongodb');
 var app = express();
 
 var appConfig = JSON.parse(JSON.minify(fs.readFileSync(__basedir + '/appConfig.json', 'utf8')));
-
+mongodb.configure(appConfig.database);
 require(__basedir + '/config/boot')();
 
 // express url encoded
@@ -37,24 +37,16 @@ require('./config/views')(app);
 
 // route middleware
 require('./config/routes')(app);
+
 //configuration
-mongodb.configure(appConfig.database);
-//connections
-async.waterfall([
-    // connect to mongodb
-    function (callback) {
-      mongodb.connect(function (err) {
-        if (err) {
-          console.log(err);
-        }
-        callback(null);
-      })
-    }
-  ],
-    function (err) {
-      // do nothing, error is already logged
-    }
-  );
+async function configureAndConnect() {
+  let connection = await mongodb.connect();
+  if (connection && connection.err) {
+    console.log(connection.err);
+  }
+}
+
+configureAndConnect();
 
 var PORT = process.env.PORT || 5000;
 

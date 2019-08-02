@@ -40,8 +40,8 @@ router.post('/register', async function(req,res,next) {
         email:email, 
         password: password
     };
-    var resCanan = await MongoDB.canan();
-    console.log(resCanan);
+/*     var resCanan = await MongoDB.canan();
+    console.log(resCanan); */
     var response = await MongoDB.findOne({email: email}, "userSchema");
     if(response) {
         if (response.err) {
